@@ -11,6 +11,6 @@ const bookSchema = new Schema({
   googleId: { type: String, required: true, unique: true }
 });
 
-const Book = mongoose.model("Book", bookSchema);
+const Book = mongoose.model("Books", bookSchema);
 
 module.exports = Book;
