@@ -1,31 +1,38 @@
 const express = require("express");
-
-const mongoose = require("mongoose");
-const routes = require("./routes");
+const path = require("path");
+const PORT = process.env.PORT || 3000;
 const app = express();
-const PORT = process.env.PORT || 3001;
 
-// Configure body parsing for AJAX requests
+// Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// Serve up static assets
+// Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-// Add routes, both API and view
-app.use(routes);
+const cors = require('cors');
+app.use(cors({
+  origin: 'http://local host:3000',
+  credentials: true,
+}));
+// Define API routes here
+const mongoose = require("mongoose");
+const mongo = process.env.PROD_MONGODB || "mongodb://localhost:27017/googlebooks"
+mongoose.connect(mongo, {useNewUrlParser: true})
+.then(() => {
+  console.log("🗄 ==> Successfully connected to mongoDB.");
+})
+.catch((err) => {
+  console.log(`Error connecting to mongoDB: ${err}`);
+});
+require("./routes/routes")(app);
+// Send every other request to the React app
+// Define any API routes before this runs
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 
-// Connect to the Mongo DB
-mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/googlebooks",
-  {
-    useCreateIndex: true,
-    useNewUrlParser: true
-  }
-);
-
-// Start the API server
-app.listen(PORT, () =>
-  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`)
-);
+app.listen(PORT, () => {
+  console.log(`🌎 ==> API server now on port ${PORT}!`);
+});

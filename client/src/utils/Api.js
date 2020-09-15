@@ -8,9 +8,9 @@ searchBooks: (title) => {
     return axios.post("/search", {title: title});
 },
 addBook: (bookData) => {
-    return axios.post("/api.books,bookData");
+    return axios.post("/api.books");
 },
 deleteBook: (id) => {
-    return axios.delete("/api/books/${id}");
+    return axios.delete(`/api/books/${id}`);
 }
 }
