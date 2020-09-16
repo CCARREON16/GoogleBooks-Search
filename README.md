@@ -1,5 +1,5 @@
 # GoogleBooks-Search
-Updated portfolio featuring 5 total projects using react
+This React-based application allows you to search and save books using the Google Books Search app!
 
 Developer: Christoper James Carreon https://github.com/CCARREON16
 
