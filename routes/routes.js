@@ -26,12 +26,13 @@ module.exports = function(app) {
             }
         ) .catch(
             (err) => {
-                res.json({error: error})
+                res.json({error: err})
             }
         );
     });
 
     app.post("/api/books", (req, res) => {
+        console.log( req.body);
         db.Books.create(req.body).then(
             (response) => {
                 res.json({successful: response});

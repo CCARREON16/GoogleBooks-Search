@@ -1,5 +1,5 @@
 import React from "react";
-import API from "../utils/API";
+import API from "../utils/Api";
 import SearchForm from "../components/SearchForm"
 import Results from "../components/Results"
 

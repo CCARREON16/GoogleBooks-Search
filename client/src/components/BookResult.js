@@ -1,7 +1,8 @@
   
 import React from "react";
-import API from "../utils/API";
+import API from "../utils/Api";
 import {BrowserRouter as Router} from "react-router-dom";
+import Api from "../utils/Api";
 
 class BookResult extends React.Component {
   constructor(props) {
@@ -24,7 +25,9 @@ class BookResult extends React.Component {
       description: this.props.description,
     };
     evt.preventDefault();
-    API.addBookToDB(bookData)
+    console.log(bookData);
+    Api.addBook(bookData)
+    
       .then((response) => {
         console.log(response);
       })
@@ -36,7 +39,7 @@ class BookResult extends React.Component {
   handleDeleteClick(evt) {
     this.setState({deleted: true});
     evt.preventDefault();
-    API.deleteBook(this.props.id).then(
+    Api.deleteBook(this.props.id).then(
         (response) => {
             console.log(response);
             Router.dispatch(this.props.location, null)
